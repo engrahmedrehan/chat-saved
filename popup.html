@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Archiver</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="popup-body">
+    <div class="header">
+        <h1>Chats Saved</h1>
+        <div class="settings" title="Auto-save discussions after 15 seconds of inactivity">
+            <label for="autoSaveToggle">Auto-Save</label>
+            <input type="checkbox" id="autoSaveToggle">
+        </div>
+    </div>
+
+    <div class="chat-list" id="chatList">
+        <!-- Chats dynamically injected via DOM JS -->
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>

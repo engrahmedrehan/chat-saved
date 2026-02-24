@@ -1,0 +1,339 @@
+/* ================================
+   Content Script: Floating Button
+   Cyberpunk Theme
+   ================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@600&display=swap');
+
+#ai-chat-archiver-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 2147483647;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #0d0221;
+    color: #00f0ff !important;
+    border: 1px solid #00f0ff;
+    border-radius: 0px;
+    /* Cyberpunk is sharp */
+    padding: 10px 18px;
+    font-family: 'Rajdhani', -apple-system, sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(0, 240, 255, 0.2);
+    transition: all 0.2s ease-in-out;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+#ai-chat-archiver-btn:hover {
+    background-color: #00f0ff;
+    color: #0d0221 !important;
+    box-shadow: 0 0 20px rgba(0, 240, 255, 0.8);
+    transform: translateY(-2px);
+}
+
+#ai-chat-archiver-btn.saved-success {
+    background-color: #ff003c;
+    color: #fff !important;
+    border-color: #ff003c;
+    box-shadow: 0 0 15px rgba(255, 0, 60, 0.6);
+}
+
+#ai-chat-archiver-btn svg {
+    stroke: currentColor;
+}
+
+
+/* ================================
+   Popup Dashboard Styles
+   Cyberpunk Theme
+   ================================ */
+:root {
+    --bg-color: #050505;
+    --panel-bg: #0f0f15;
+    --text-color: #e0e0e0;
+    --text-sub: #8892b0;
+    --border-color: #00f0ff;
+    --primary: #00f0ff;
+    --secondary: #ff003c;
+    --accent: #fcee0a;
+    --danger: #ff003c;
+}
+
+body.popup-body {
+    width: 440px;
+    max-height: 550px;
+    margin: 0;
+    padding: 0;
+    font-family: 'Rajdhani', -apple-system, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+body.popup-body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(rgba(0, 240, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background-color: var(--panel-bg);
+    border-bottom: 2px solid var(--primary);
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 4px 15px rgba(0, 240, 255, 0.1);
+}
+
+.header h1 {
+    margin: 0;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--primary);
+    text-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.settings {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+    cursor: help;
+    text-transform: uppercase;
+}
+
+/* Custom Checkbox Cyberpunk */
+input[type="checkbox"] {
+    appearance: none;
+    width: 30px;
+    height: 16px;
+    background: #222;
+    border: 1px solid var(--accent);
+    position: relative;
+    outline: none;
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(252, 238, 10, 0.2);
+}
+
+input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    top: 1px;
+    left: 1px;
+    transition: 0.2s;
+    box-shadow: 0 0 5px var(--accent);
+}
+
+input[type="checkbox"]:checked {
+    background: rgba(252, 238, 10, 0.2);
+}
+
+input[type="checkbox"]:checked::before {
+    left: 15px;
+}
+
+.chat-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Custom Scrollbar */
+.chat-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-list::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+
+.chat-list::-webkit-scrollbar-thumb {
+    background: var(--primary);
+}
+
+.no-chats {
+    text-align: center;
+    color: var(--primary);
+    margin-top: 40px;
+    font-size: 16px;
+    font-family: 'Orbitron', sans-serif;
+    line-height: 1.5;
+    text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+}
+
+.chat-card {
+    background-color: rgba(15, 15, 21, 0.8);
+    border: 1px solid #333;
+    border-left: 3px solid var(--primary);
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.chat-card:hover {
+    border-color: var(--primary);
+    box-shadow: inset 0 0 10px rgba(0, 240, 255, 0.1), 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+.chat-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-top: 1px solid var(--primary);
+    border-right: 1px solid var(--primary);
+    opacity: 0.5;
+}
+
+.chat-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-bottom: 1px solid var(--primary);
+    border-left: 1px solid var(--primary);
+    opacity: 0.5;
+}
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.chat-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin: 0;
+    color: #fff;
+    word-break: break-word;
+    cursor: text;
+    border-bottom: 1px dashed transparent;
+    display: inline-block;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+}
+
+.chat-title:hover {
+    border-bottom: 1px dashed var(--primary);
+    color: var(--primary);
+}
+
+.title-edit-input {
+    width: 100%;
+    padding: 4px 6px;
+    font-size: 16px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    border: 1px solid var(--primary);
+    background: rgba(0, 240, 255, 0.1);
+    color: var(--primary);
+    box-sizing: border-box;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.3);
+}
+
+.chat-meta {
+    font-size: 12px;
+    color: var(--text-sub);
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    font-family: 'Orbitron', monospace;
+    letter-spacing: 0.5px;
+}
+
+.chat-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.export-group {
+    display: flex;
+    gap: 6px;
+}
+
+.btn {
+    background: none;
+    border: 1px solid #444;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover {
+    background-color: #222;
+    border-color: #888;
+}
+
+.btn.export-pdf {
+    color: #0d0221;
+    background-color: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+    font-weight: 700;
+}
+
+.btn.export-pdf:hover {
+    background-color: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+.btn.delete {
+    color: var(--danger);
+    border-color: #444;
+}
+
+.btn.delete:hover {
+    background-color: rgba(255, 0, 60, 0.1);
+    border-color: var(--danger);
+    box-shadow: 0 0 8px rgba(255, 0, 60, 0.4);
+}
